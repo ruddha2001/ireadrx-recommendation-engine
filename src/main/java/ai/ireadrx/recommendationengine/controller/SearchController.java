@@ -22,7 +22,7 @@ public class SearchController {
 	}
 
 	@GetMapping("/chemical")
-	Mono<ChemicalEntity> findOneChemicalByName(@RequestParam String id) {
-		return chemicalRepository.findById(id);
+	Mono<ChemicalEntity> findOneChemicalByName(@RequestParam String chemical_name) {
+		return chemicalRepository.findOneByName(chemical_name);
 	}
 }
