@@ -1,10 +1,11 @@
 package ai.ireadrx.recommendationengine.repository;
 
-import org.springframework.data.neo4j.repository.ReactiveNeo4jRepository;
+import java.util.Optional;
+
+import org.springframework.data.neo4j.repository.Neo4jRepository;
 
 import ai.ireadrx.recommendationengine.entity.ChemicalEntity;
-import reactor.core.publisher.Mono;
 
-public interface ChemicalRepository extends ReactiveNeo4jRepository<ChemicalEntity, String> {
-	Mono<ChemicalEntity> findByChemicalName(String chemicalName);
+public interface ChemicalRepository extends Neo4jRepository<ChemicalEntity, String> {
+	Optional<ChemicalEntity> findByChemicalName(String chemicalName);
 }
