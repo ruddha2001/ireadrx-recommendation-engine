@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ai.ireadrx.recommendationengine.entity.ChemicalEntity;
+import ai.ireadrx.recommendationengine.entity.PatentEntity;
 import ai.ireadrx.recommendationengine.service.SearchService;
 
 @RestController
@@ -31,6 +32,15 @@ public class SearchController {
 			limit = Integer.parseInt(limitResults.get());
 
 		return searchService.getAllChemicalsUsingCustomQuery(limit);
+	}
+
+	@GetMapping("/patents/all")
+	List<PatentEntity> getPatents(@RequestParam Optional<String> limitResults) {
+		int limit = 100;
+		if (limitResults.isPresent())
+			limit = Integer.parseInt(limitResults.get());
+
+		return searchService.getAllPatentsUsingCustomQuery(limit);
 	}
 
 }
