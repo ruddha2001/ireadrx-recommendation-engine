@@ -10,6 +10,6 @@ import ai.ireadrx.recommendationengine.entity.PatentEntity;
 
 @Repository
 public interface PatentRepository extends Neo4jRepository<PatentEntity, String> {
-	@Query("MATCH (p:Patent) RETURN p LIMIT $number")
+	@Query("MATCH (p:Patent)<-[r:PRESENT_IN]-(c:Chemical) RETURN DISTINCT p LIMIT $number")
 	List<PatentEntity> findAllByCustomQuery(Integer number);
 }
