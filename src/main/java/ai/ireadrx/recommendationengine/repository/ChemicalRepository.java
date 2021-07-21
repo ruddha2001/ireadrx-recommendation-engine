@@ -13,6 +13,6 @@ import ai.ireadrx.recommendationengine.entity.ChemicalEntity;
 public interface ChemicalRepository extends Neo4jRepository<ChemicalEntity, String> {
 	Optional<ChemicalEntity> findByChemicalName(String chemicalName);
 
-	@Query("MATCH (c:Chemical) RETURN c LIMIT $number")
+	@Query("MATCH (c:Chemical) RETURN DISTINCT c LIMIT $number")
 	List<ChemicalEntity> findByCustomQuery(Integer number);
 }
