@@ -25,8 +25,12 @@ public class SearchController {
 	}
 
 	@GetMapping("/chemicals/all")
-	List<ChemicalEntity> getChemicals() {
-		return searchService.getAllChemicals();
+	List<ChemicalEntity> getChemicals(@RequestParam Optional<String> limitResults) {
+		int limit = 100;
+		if (limitResults.isPresent())
+			limit = Integer.parseInt(limitResults.get());
+
+		return searchService.getAllChemicalsUsingCustomQuery(limit);
 	}
 
 }
