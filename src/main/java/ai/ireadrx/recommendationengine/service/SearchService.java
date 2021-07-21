@@ -35,4 +35,8 @@ public class SearchService {
 	public List<ChemicalEntity> getAllChemicals() {
 		return chemicalRepository.findAll();
 	}
+
+	public List<ChemicalEntity> getAllChemicalsUsingCustomQuery(int resultLimit) {
+		return chemicalRepository.findByCustomQuery(resultLimit);
+	}
 }
