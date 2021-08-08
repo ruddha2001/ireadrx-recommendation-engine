@@ -4,14 +4,14 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import ai.ireadrx.recommendationengine.repository.PatentRecommendationRepository;
+import ai.ireadrx.recommendationengine.repository.RecommendationRepository;
 
 @Service
 public class RecommendationService {
-	private final PatentRecommendationRepository patenrPatentRecommendationRepository;
+	private final RecommendationRepository recommendationRepository;
 
-	public RecommendationService(PatentRecommendationRepository patenrPatentRecommendationRepository) {
-		this.patenrPatentRecommendationRepository = patenrPatentRecommendationRepository;
+	public RecommendationService(RecommendationRepository recommendationRepository) {
+		this.recommendationRepository = recommendationRepository;
 	}
 
 	/**
@@ -21,6 +21,16 @@ public class RecommendationService {
 	 * @return
 	 */
 	public List<String> getPatentRecommendation(String patentId) {
-		return patenrPatentRecommendationRepository.findPatentRecommendation(patentId);
+		return recommendationRepository.findPatentRecommendation(patentId);
+	}
+
+	/**
+	 * Get a list of chemical recommendations
+	 * 
+	 * @param patentId The chemical name to be matched to other chemicals
+	 * @return
+	 */
+	public List<String> getChemicalRecommendation(String chemicalName) {
+		return recommendationRepository.findChemicalRecommendation("benzene");
 	}
 }

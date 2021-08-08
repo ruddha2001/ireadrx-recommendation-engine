@@ -21,4 +21,9 @@ public class RecommendationController {
 	List<String> getPatentRecommendation(@RequestParam String patentId) {
 		return recommendationService.getPatentRecommendation(patentId);
 	}
+
+	@GetMapping("/chemical")
+	List<String> getChemicalRecommendation(@RequestParam String chemicalName) {
+		return recommendationService.getChemicalRecommendation(chemicalName);
+	}
 }
