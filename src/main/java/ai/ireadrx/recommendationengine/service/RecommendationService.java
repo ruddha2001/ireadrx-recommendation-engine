@@ -31,6 +31,9 @@ public class RecommendationService {
 	 * @return
 	 */
 	public List<String> getChemicalRecommendation(String chemicalName) {
-		return recommendationRepository.findChemicalRecommendation("benzene");
+		List<String> cachedList = CacheService.findListFromCache(chemicalName);
+		if (cachedList != null)
+			return cachedList;
+		return recommendationRepository.findChemicalRecommendation(chemicalName);
 	}
 }
