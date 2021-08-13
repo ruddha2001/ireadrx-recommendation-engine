@@ -15,13 +15,7 @@ public interface RecommendationRepository extends Neo4jRepository<Recommendation
 			+ "YIELD item1, item2, count1, count2, intersection, similarity "
 			+ "WHERE gds.util.asNode(item1).patentId = $patentId " + "RETURN gds.util.asNode(item2).patentId as to "
 			+ "ORDER BY intersection DESC, similarity DESC, count2 DESC")
-	List<String> findPatentRecommendation(String patentId);
-
-//	@Query("Match (givenChem:Chemical)-[:PRESENT_IN]->(topPatent:Patent) "
-//			+ "Match (p:Patent {patentId:topPatent.patentId })<-[r:PRESENT_IN]-(c:Chemical)-[s:PRESENT_IN]->(n:Patent) "
-//			+ "WITH count(c.chemicalName) as freq, c ORDER BY freq DESC " + "RETURN DISTINCT c.chemicalName "
-//			+ "LIMIT 100")
-//	List<String> findChemicalRecommendation(String chemicalName);
+	List<String> findPatentRecommendation(@Param("patentId") String patentId);
 
 	@Query("CALL gds.nodeSimilarity.stream('chemicalGraph') " + "YIELD node1, node2, similarity "
 			+ "WHERE gds.util.asNode(node1).chemicalName = '$chemicalName' "
