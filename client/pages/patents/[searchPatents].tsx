@@ -9,21 +9,32 @@ const SearchPatents: React.SFC<SearchPatentsProps> = () => {
   const [name, setName] = useState("");
   const [results, setResults] = useState<string[]>([]);
   const [recommendations, setRecommendations] = useState<string[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const params = router.asPath.split("/")[2];
+    const params = router.query.searchPatents as string;
     console.log(params);
     setName(params);
-    async function mockResults(): Promise<void> {
-      setLoading(true);
-      const mockData = JSON.parse(JSON.stringify(mock)) as {
-        patentId: string;
-      }[];
-      console.log(typeof mockData);
-      setRecommendations(mock.map((e) => e.patentId));
+    async function fetchResults(name: string): Promise<void> {
+      console.log('Param : ', name);
+      const data = await fetch(
+        `${process.env.NEXT_PUBLIC_API_ROUTE}/recommend/patent/?patentId=${name}`
+      );
+      if (data.status === 200) {
+        const responseData= await data.json() || [] as string[];
+        console.log(responseData);
+        setResults(
+          responseData.map(
+            (e) => e
+          )
+        );
+      } else {
+        console.log(data);
+      }
       setLoading(false);
     }
-    mockResults();
+    if(params){
+      fetchResults(params);
+    }
   }, [router]);
   return (
     <div>
@@ -32,7 +43,7 @@ const SearchPatents: React.SFC<SearchPatentsProps> = () => {
         <p className="italic underline font-semibold">{name}</p>
       </div>
       {loading ? (
-        <div>Loading</div>
+        <div className='text-center text-xl font-bold'>Loading</div>
       ) : (
         <div className="flex">
           <div className='flex-1'>
@@ -50,21 +61,6 @@ const SearchPatents: React.SFC<SearchPatentsProps> = () => {
               ))
             )}
           </div>
-          {recommendations.length === 0 ? (
-            <p className='text-center'>No Recommendations</p>
-          ) : (
-            <div className='flex-1'>
-                <p className='text-center font-bold text-2xl'>Recommendations</p>
-              {recommendations.map((e) => (
-                <div
-                  key={recommendations.indexOf(e)}
-                  className="bg-gray-300 p-8 m-4 rounded-md"
-                >
-                  {e.toString()}
-                </div>
-              ))}
-            </div>
-          )}
         </div>
       )}
     </div>

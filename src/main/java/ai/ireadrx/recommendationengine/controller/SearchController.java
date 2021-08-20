@@ -20,12 +20,12 @@ public class SearchController {
 
 	@Autowired
 	SearchService searchService;
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "*")
 	@GetMapping("/chemicals")
 	Optional<ChemicalEntity> getSingleChemical(@RequestParam String chemicalName) {
 		return searchService.getChemicalByChemicalName(chemicalName);
 	}
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "*")
 	@GetMapping("/chemicals/all")
 	List<ChemicalEntity> getChemicals(@RequestParam Optional<String> limitResults) {
 		int limit = 100;
@@ -34,7 +34,7 @@ public class SearchController {
 
 		return searchService.getAllChemicalsUsingCustomQuery(limit);
 	}
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "*")
 	@GetMapping("/patents/all")
 	List<PatentEntity> getPatents(@RequestParam Optional<String> limitResults) {
 		int limit = 100;
